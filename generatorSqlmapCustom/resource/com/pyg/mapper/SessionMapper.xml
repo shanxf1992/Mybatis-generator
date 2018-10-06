@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pyg.mapper.SessionMapper">
+  <resultMap id="BaseResultMap" type="com.pyg.pojo.Session">
+    <id column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="session_count" jdbcType="INTEGER" property="sessionCount" />
+    <result column="1s_3s" jdbcType="DOUBLE" property="1s3s" />
+    <result column="14_6s" jdbcType="DOUBLE" property="146s" />
+    <result column="7s_9s" jdbcType="DOUBLE" property="7s9s" />
+    <result column="10s_30s" jdbcType="DOUBLE" property="10s30s" />
+    <result column="30s_6s" jdbcType="DOUBLE" property="30s6s" />
+    <result column="1m_3m" jdbcType="DOUBLE" property="1m3m" />
+    <result column="3m_10m" jdbcType="DOUBLE" property="3m10m" />
+    <result column="10m_30m" jdbcType="DOUBLE" property="10m30m" />
+    <result column="30m" jdbcType="DOUBLE" property="30m" />
+    <result column="1_3" jdbcType="DOUBLE" property="13" />
+    <result column="4_6" jdbcType="DOUBLE" property="46" />
+    <result column="7_9" jdbcType="DOUBLE" property="79" />
+    <result column="10_30" jdbcType="DOUBLE" property="1030" />
+    <result column="30_60" jdbcType="DOUBLE" property="3060" />
+    <result column="60" jdbcType="DOUBLE" property="60" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    task_id, session_count, 1s_3s, 14_6s, 7s_9s, 10s_30s, 30s_6s, 1m_3m, 3m_10m, 10m_30m, 
+    30m, 1_3, 4_6, 7_9, 10_30, 30_60, 60
+  </sql>
+  <select id="selectByExample" parameterType="com.pyg.pojo.SessionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from session
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from session
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pyg.pojo.SessionExample">
+    delete from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pyg.pojo.Session">
+    insert into session (task_id, session_count, 1s_3s, 
+      14_6s, 7s_9s, 10s_30s, 30s_6s, 
+      1m_3m, 3m_10m, 10m_30m, 30m, 
+      1_3, 4_6, 7_9, 10_30, 
+      30_60, 60)
+    values (#{taskId,jdbcType=INTEGER}, #{sessionCount,jdbcType=INTEGER}, #{1s3s,jdbcType=DOUBLE}, 
+      #{146s,jdbcType=DOUBLE}, #{7s9s,jdbcType=DOUBLE}, #{10s30s,jdbcType=DOUBLE}, #{30s6s,jdbcType=DOUBLE}, 
+      #{1m3m,jdbcType=DOUBLE}, #{3m10m,jdbcType=DOUBLE}, #{10m30m,jdbcType=DOUBLE}, #{30m,jdbcType=DOUBLE}, 
+      #{13,jdbcType=DOUBLE}, #{46,jdbcType=DOUBLE}, #{79,jdbcType=DOUBLE}, #{1030,jdbcType=DOUBLE}, 
+      #{3060,jdbcType=DOUBLE}, #{60,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pyg.pojo.Session">
+    insert into session
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="sessionCount != null">
+        session_count,
+      </if>
+      <if test="1s3s != null">
+        1s_3s,
+      </if>
+      <if test="146s != null">
+        14_6s,
+      </if>
+      <if test="7s9s != null">
+        7s_9s,
+      </if>
+      <if test="10s30s != null">
+        10s_30s,
+      </if>
+      <if test="30s6s != null">
+        30s_6s,
+      </if>
+      <if test="1m3m != null">
+        1m_3m,
+      </if>
+      <if test="3m10m != null">
+        3m_10m,
+      </if>
+      <if test="10m30m != null">
+        10m_30m,
+      </if>
+      <if test="30m != null">
+        30m,
+      </if>
+      <if test="13 != null">
+        1_3,
+      </if>
+      <if test="46 != null">
+        4_6,
+      </if>
+      <if test="79 != null">
+        7_9,
+      </if>
+      <if test="1030 != null">
+        10_30,
+      </if>
+      <if test="3060 != null">
+        30_60,
+      </if>
+      <if test="60 != null">
+        60,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="sessionCount != null">
+        #{sessionCount,jdbcType=INTEGER},
+      </if>
+      <if test="1s3s != null">
+        #{1s3s,jdbcType=DOUBLE},
+      </if>
+      <if test="146s != null">
+        #{146s,jdbcType=DOUBLE},
+      </if>
+      <if test="7s9s != null">
+        #{7s9s,jdbcType=DOUBLE},
+      </if>
+      <if test="10s30s != null">
+        #{10s30s,jdbcType=DOUBLE},
+      </if>
+      <if test="30s6s != null">
+        #{30s6s,jdbcType=DOUBLE},
+      </if>
+      <if test="1m3m != null">
+        #{1m3m,jdbcType=DOUBLE},
+      </if>
+      <if test="3m10m != null">
+        #{3m10m,jdbcType=DOUBLE},
+      </if>
+      <if test="10m30m != null">
+        #{10m30m,jdbcType=DOUBLE},
+      </if>
+      <if test="30m != null">
+        #{30m,jdbcType=DOUBLE},
+      </if>
+      <if test="13 != null">
+        #{13,jdbcType=DOUBLE},
+      </if>
+      <if test="46 != null">
+        #{46,jdbcType=DOUBLE},
+      </if>
+      <if test="79 != null">
+        #{79,jdbcType=DOUBLE},
+      </if>
+      <if test="1030 != null">
+        #{1030,jdbcType=DOUBLE},
+      </if>
+      <if test="3060 != null">
+        #{3060,jdbcType=DOUBLE},
+      </if>
+      <if test="60 != null">
+        #{60,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pyg.pojo.SessionExample" resultType="java.lang.Integer">
+    select count(*) from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update session
+    <set>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sessionCount != null">
+        session_count = #{record.sessionCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.1s3s != null">
+        1s_3s = #{record.1s3s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.146s != null">
+        14_6s = #{record.146s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.7s9s != null">
+        7s_9s = #{record.7s9s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.10s30s != null">
+        10s_30s = #{record.10s30s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.30s6s != null">
+        30s_6s = #{record.30s6s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.1m3m != null">
+        1m_3m = #{record.1m3m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.3m10m != null">
+        3m_10m = #{record.3m10m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.10m30m != null">
+        10m_30m = #{record.10m30m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.30m != null">
+        30m = #{record.30m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.13 != null">
+        1_3 = #{record.13,jdbcType=DOUBLE},
+      </if>
+      <if test="record.46 != null">
+        4_6 = #{record.46,jdbcType=DOUBLE},
+      </if>
+      <if test="record.79 != null">
+        7_9 = #{record.79,jdbcType=DOUBLE},
+      </if>
+      <if test="record.1030 != null">
+        10_30 = #{record.1030,jdbcType=DOUBLE},
+      </if>
+      <if test="record.3060 != null">
+        30_60 = #{record.3060,jdbcType=DOUBLE},
+      </if>
+      <if test="record.60 != null">
+        60 = #{record.60,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update session
+    set task_id = #{record.taskId,jdbcType=INTEGER},
+      session_count = #{record.sessionCount,jdbcType=INTEGER},
+      1s_3s = #{record.1s3s,jdbcType=DOUBLE},
+      14_6s = #{record.146s,jdbcType=DOUBLE},
+      7s_9s = #{record.7s9s,jdbcType=DOUBLE},
+      10s_30s = #{record.10s30s,jdbcType=DOUBLE},
+      30s_6s = #{record.30s6s,jdbcType=DOUBLE},
+      1m_3m = #{record.1m3m,jdbcType=DOUBLE},
+      3m_10m = #{record.3m10m,jdbcType=DOUBLE},
+      10m_30m = #{record.10m30m,jdbcType=DOUBLE},
+      30m = #{record.30m,jdbcType=DOUBLE},
+      1_3 = #{record.13,jdbcType=DOUBLE},
+      4_6 = #{record.46,jdbcType=DOUBLE},
+      7_9 = #{record.79,jdbcType=DOUBLE},
+      10_30 = #{record.1030,jdbcType=DOUBLE},
+      30_60 = #{record.3060,jdbcType=DOUBLE},
+      60 = #{record.60,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pyg.pojo.Session">
+    update session
+    <set>
+      <if test="sessionCount != null">
+        session_count = #{sessionCount,jdbcType=INTEGER},
+      </if>
+      <if test="1s3s != null">
+        1s_3s = #{1s3s,jdbcType=DOUBLE},
+      </if>
+      <if test="146s != null">
+        14_6s = #{146s,jdbcType=DOUBLE},
+      </if>
+      <if test="7s9s != null">
+        7s_9s = #{7s9s,jdbcType=DOUBLE},
+      </if>
+      <if test="10s30s != null">
+        10s_30s = #{10s30s,jdbcType=DOUBLE},
+      </if>
+      <if test="30s6s != null">
+        30s_6s = #{30s6s,jdbcType=DOUBLE},
+      </if>
+      <if test="1m3m != null">
+        1m_3m = #{1m3m,jdbcType=DOUBLE},
+      </if>
+      <if test="3m10m != null">
+        3m_10m = #{3m10m,jdbcType=DOUBLE},
+      </if>
+      <if test="10m30m != null">
+        10m_30m = #{10m30m,jdbcType=DOUBLE},
+      </if>
+      <if test="30m != null">
+        30m = #{30m,jdbcType=DOUBLE},
+      </if>
+      <if test="13 != null">
+        1_3 = #{13,jdbcType=DOUBLE},
+      </if>
+      <if test="46 != null">
+        4_6 = #{46,jdbcType=DOUBLE},
+      </if>
+      <if test="79 != null">
+        7_9 = #{79,jdbcType=DOUBLE},
+      </if>
+      <if test="1030 != null">
+        10_30 = #{1030,jdbcType=DOUBLE},
+      </if>
+      <if test="3060 != null">
+        30_60 = #{3060,jdbcType=DOUBLE},
+      </if>
+      <if test="60 != null">
+        60 = #{60,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pyg.pojo.Session">
+    update session
+    set session_count = #{sessionCount,jdbcType=INTEGER},
+      1s_3s = #{1s3s,jdbcType=DOUBLE},
+      14_6s = #{146s,jdbcType=DOUBLE},
+      7s_9s = #{7s9s,jdbcType=DOUBLE},
+      10s_30s = #{10s30s,jdbcType=DOUBLE},
+      30s_6s = #{30s6s,jdbcType=DOUBLE},
+      1m_3m = #{1m3m,jdbcType=DOUBLE},
+      3m_10m = #{3m10m,jdbcType=DOUBLE},
+      10m_30m = #{10m30m,jdbcType=DOUBLE},
+      30m = #{30m,jdbcType=DOUBLE},
+      1_3 = #{13,jdbcType=DOUBLE},
+      4_6 = #{46,jdbcType=DOUBLE},
+      7_9 = #{79,jdbcType=DOUBLE},
+      10_30 = #{1030,jdbcType=DOUBLE},
+      30_60 = #{3060,jdbcType=DOUBLE},
+      60 = #{60,jdbcType=DOUBLE}
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.pyg.pojo.Session">
+    <id column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="session_count" jdbcType="INTEGER" property="sessionCount" />
+    <result column="1s_3s" jdbcType="DOUBLE" property="1s3s" />
+    <result column="14_6s" jdbcType="DOUBLE" property="146s" />
+    <result column="7s_9s" jdbcType="DOUBLE" property="7s9s" />
+    <result column="10s_30s" jdbcType="DOUBLE" property="10s30s" />
+    <result column="30s_6s" jdbcType="DOUBLE" property="30s6s" />
+    <result column="1m_3m" jdbcType="DOUBLE" property="1m3m" />
+    <result column="3m_10m" jdbcType="DOUBLE" property="3m10m" />
+    <result column="10m_30m" jdbcType="DOUBLE" property="10m30m" />
+    <result column="30m" jdbcType="DOUBLE" property="30m" />
+    <result column="1_3" jdbcType="DOUBLE" property="13" />
+    <result column="4_6" jdbcType="DOUBLE" property="46" />
+    <result column="7_9" jdbcType="DOUBLE" property="79" />
+    <result column="10_30" jdbcType="DOUBLE" property="1030" />
+    <result column="30_60" jdbcType="DOUBLE" property="3060" />
+    <result column="60" jdbcType="DOUBLE" property="60" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    task_id, session_count, 1s_3s, 14_6s, 7s_9s, 10s_30s, 30s_6s, 1m_3m, 3m_10m, 10m_30m, 
+    30m, 1_3, 4_6, 7_9, 10_30, 30_60, 60
+  </sql>
+  <select id="selectByExample" parameterType="com.pyg.pojo.SessionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from session
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from session
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pyg.pojo.SessionExample">
+    delete from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pyg.pojo.Session">
+    insert into session (task_id, session_count, 1s_3s, 
+      14_6s, 7s_9s, 10s_30s, 30s_6s, 
+      1m_3m, 3m_10m, 10m_30m, 30m, 
+      1_3, 4_6, 7_9, 10_30, 
+      30_60, 60)
+    values (#{taskId,jdbcType=INTEGER}, #{sessionCount,jdbcType=INTEGER}, #{1s3s,jdbcType=DOUBLE}, 
+      #{146s,jdbcType=DOUBLE}, #{7s9s,jdbcType=DOUBLE}, #{10s30s,jdbcType=DOUBLE}, #{30s6s,jdbcType=DOUBLE}, 
+      #{1m3m,jdbcType=DOUBLE}, #{3m10m,jdbcType=DOUBLE}, #{10m30m,jdbcType=DOUBLE}, #{30m,jdbcType=DOUBLE}, 
+      #{13,jdbcType=DOUBLE}, #{46,jdbcType=DOUBLE}, #{79,jdbcType=DOUBLE}, #{1030,jdbcType=DOUBLE}, 
+      #{3060,jdbcType=DOUBLE}, #{60,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pyg.pojo.Session">
+    insert into session
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="sessionCount != null">
+        session_count,
+      </if>
+      <if test="1s3s != null">
+        1s_3s,
+      </if>
+      <if test="146s != null">
+        14_6s,
+      </if>
+      <if test="7s9s != null">
+        7s_9s,
+      </if>
+      <if test="10s30s != null">
+        10s_30s,
+      </if>
+      <if test="30s6s != null">
+        30s_6s,
+      </if>
+      <if test="1m3m != null">
+        1m_3m,
+      </if>
+      <if test="3m10m != null">
+        3m_10m,
+      </if>
+      <if test="10m30m != null">
+        10m_30m,
+      </if>
+      <if test="30m != null">
+        30m,
+      </if>
+      <if test="13 != null">
+        1_3,
+      </if>
+      <if test="46 != null">
+        4_6,
+      </if>
+      <if test="79 != null">
+        7_9,
+      </if>
+      <if test="1030 != null">
+        10_30,
+      </if>
+      <if test="3060 != null">
+        30_60,
+      </if>
+      <if test="60 != null">
+        60,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="sessionCount != null">
+        #{sessionCount,jdbcType=INTEGER},
+      </if>
+      <if test="1s3s != null">
+        #{1s3s,jdbcType=DOUBLE},
+      </if>
+      <if test="146s != null">
+        #{146s,jdbcType=DOUBLE},
+      </if>
+      <if test="7s9s != null">
+        #{7s9s,jdbcType=DOUBLE},
+      </if>
+      <if test="10s30s != null">
+        #{10s30s,jdbcType=DOUBLE},
+      </if>
+      <if test="30s6s != null">
+        #{30s6s,jdbcType=DOUBLE},
+      </if>
+      <if test="1m3m != null">
+        #{1m3m,jdbcType=DOUBLE},
+      </if>
+      <if test="3m10m != null">
+        #{3m10m,jdbcType=DOUBLE},
+      </if>
+      <if test="10m30m != null">
+        #{10m30m,jdbcType=DOUBLE},
+      </if>
+      <if test="30m != null">
+        #{30m,jdbcType=DOUBLE},
+      </if>
+      <if test="13 != null">
+        #{13,jdbcType=DOUBLE},
+      </if>
+      <if test="46 != null">
+        #{46,jdbcType=DOUBLE},
+      </if>
+      <if test="79 != null">
+        #{79,jdbcType=DOUBLE},
+      </if>
+      <if test="1030 != null">
+        #{1030,jdbcType=DOUBLE},
+      </if>
+      <if test="3060 != null">
+        #{3060,jdbcType=DOUBLE},
+      </if>
+      <if test="60 != null">
+        #{60,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pyg.pojo.SessionExample" resultType="java.lang.Integer">
+    select count(*) from session
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update session
+    <set>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sessionCount != null">
+        session_count = #{record.sessionCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.1s3s != null">
+        1s_3s = #{record.1s3s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.146s != null">
+        14_6s = #{record.146s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.7s9s != null">
+        7s_9s = #{record.7s9s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.10s30s != null">
+        10s_30s = #{record.10s30s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.30s6s != null">
+        30s_6s = #{record.30s6s,jdbcType=DOUBLE},
+      </if>
+      <if test="record.1m3m != null">
+        1m_3m = #{record.1m3m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.3m10m != null">
+        3m_10m = #{record.3m10m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.10m30m != null">
+        10m_30m = #{record.10m30m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.30m != null">
+        30m = #{record.30m,jdbcType=DOUBLE},
+      </if>
+      <if test="record.13 != null">
+        1_3 = #{record.13,jdbcType=DOUBLE},
+      </if>
+      <if test="record.46 != null">
+        4_6 = #{record.46,jdbcType=DOUBLE},
+      </if>
+      <if test="record.79 != null">
+        7_9 = #{record.79,jdbcType=DOUBLE},
+      </if>
+      <if test="record.1030 != null">
+        10_30 = #{record.1030,jdbcType=DOUBLE},
+      </if>
+      <if test="record.3060 != null">
+        30_60 = #{record.3060,jdbcType=DOUBLE},
+      </if>
+      <if test="record.60 != null">
+        60 = #{record.60,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update session
+    set task_id = #{record.taskId,jdbcType=INTEGER},
+      session_count = #{record.sessionCount,jdbcType=INTEGER},
+      1s_3s = #{record.1s3s,jdbcType=DOUBLE},
+      14_6s = #{record.146s,jdbcType=DOUBLE},
+      7s_9s = #{record.7s9s,jdbcType=DOUBLE},
+      10s_30s = #{record.10s30s,jdbcType=DOUBLE},
+      30s_6s = #{record.30s6s,jdbcType=DOUBLE},
+      1m_3m = #{record.1m3m,jdbcType=DOUBLE},
+      3m_10m = #{record.3m10m,jdbcType=DOUBLE},
+      10m_30m = #{record.10m30m,jdbcType=DOUBLE},
+      30m = #{record.30m,jdbcType=DOUBLE},
+      1_3 = #{record.13,jdbcType=DOUBLE},
+      4_6 = #{record.46,jdbcType=DOUBLE},
+      7_9 = #{record.79,jdbcType=DOUBLE},
+      10_30 = #{record.1030,jdbcType=DOUBLE},
+      30_60 = #{record.3060,jdbcType=DOUBLE},
+      60 = #{record.60,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pyg.pojo.Session">
+    update session
+    <set>
+      <if test="sessionCount != null">
+        session_count = #{sessionCount,jdbcType=INTEGER},
+      </if>
+      <if test="1s3s != null">
+        1s_3s = #{1s3s,jdbcType=DOUBLE},
+      </if>
+      <if test="146s != null">
+        14_6s = #{146s,jdbcType=DOUBLE},
+      </if>
+      <if test="7s9s != null">
+        7s_9s = #{7s9s,jdbcType=DOUBLE},
+      </if>
+      <if test="10s30s != null">
+        10s_30s = #{10s30s,jdbcType=DOUBLE},
+      </if>
+      <if test="30s6s != null">
+        30s_6s = #{30s6s,jdbcType=DOUBLE},
+      </if>
+      <if test="1m3m != null">
+        1m_3m = #{1m3m,jdbcType=DOUBLE},
+      </if>
+      <if test="3m10m != null">
+        3m_10m = #{3m10m,jdbcType=DOUBLE},
+      </if>
+      <if test="10m30m != null">
+        10m_30m = #{10m30m,jdbcType=DOUBLE},
+      </if>
+      <if test="30m != null">
+        30m = #{30m,jdbcType=DOUBLE},
+      </if>
+      <if test="13 != null">
+        1_3 = #{13,jdbcType=DOUBLE},
+      </if>
+      <if test="46 != null">
+        4_6 = #{46,jdbcType=DOUBLE},
+      </if>
+      <if test="79 != null">
+        7_9 = #{79,jdbcType=DOUBLE},
+      </if>
+      <if test="1030 != null">
+        10_30 = #{1030,jdbcType=DOUBLE},
+      </if>
+      <if test="3060 != null">
+        30_60 = #{3060,jdbcType=DOUBLE},
+      </if>
+      <if test="60 != null">
+        60 = #{60,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pyg.pojo.Session">
+    update session
+    set session_count = #{sessionCount,jdbcType=INTEGER},
+      1s_3s = #{1s3s,jdbcType=DOUBLE},
+      14_6s = #{146s,jdbcType=DOUBLE},
+      7s_9s = #{7s9s,jdbcType=DOUBLE},
+      10s_30s = #{10s30s,jdbcType=DOUBLE},
+      30s_6s = #{30s6s,jdbcType=DOUBLE},
+      1m_3m = #{1m3m,jdbcType=DOUBLE},
+      3m_10m = #{3m10m,jdbcType=DOUBLE},
+      10m_30m = #{10m30m,jdbcType=DOUBLE},
+      30m = #{30m,jdbcType=DOUBLE},
+      1_3 = #{13,jdbcType=DOUBLE},
+      4_6 = #{46,jdbcType=DOUBLE},
+      7_9 = #{79,jdbcType=DOUBLE},
+      10_30 = #{1030,jdbcType=DOUBLE},
+      30_60 = #{3060,jdbcType=DOUBLE},
+      60 = #{60,jdbcType=DOUBLE}
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+</mapper>
